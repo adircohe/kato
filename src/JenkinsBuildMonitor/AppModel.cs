@@ -30,6 +30,7 @@ namespace Kato
 	{
 		public AppModel(TaskbarIcon notifyIcon, TaskbarItemInfo taskbarItemInfo)
 		{
+			m_newServerAuthRequired = true;
 			m_isAddServerUrlValid = true;
 			m_updateManager = new AutoUpdater();
 			m_notifyIcon = notifyIcon;
@@ -185,7 +186,7 @@ namespace Kato
 
 		public async Task Initialize()
 		{
-			AutoDetectServers();
+			//AutoDetectServers();
 
 			if (m_settings?.Servers == null || m_settings.Servers.Count == 0)
 			{
@@ -195,7 +196,7 @@ namespace Kato
 			else
 			{
 				foreach (var server in m_settings.Servers)
-					await AddServer(server.DomainUrl, false).ConfigureAwait(true);
+					await AddServer(server.DomainUrl, server.RequiresAuthentication).ConfigureAwait(true);
 			}
 
 			await Update().ConfigureAwait(true);
@@ -236,6 +237,11 @@ namespace Kato
 						RequiresAuthentication = server.RequiresAuthentication
 					});
 				}
+				
+				if (server.Delete)
+				{
+					m_settings.Servers.RemoveAll(x => x.DomainUrl == server.DomainUrl);
+				}
 			}
 
 			PersistedUserSettings.Save(m_settings);
@@ -257,7 +263,7 @@ namespace Kato
 				return;
 			}
 
-			if (await AddServer(NewServerUrl, NewServerAuthRequired).ConfigureAwait(true))
+			if (await AddServer(NewServerUrl, NewServerAuthRequired, true).ConfigureAwait(true))
 			{
 				IsAddServerUrlValid = true;
 				NewServerUrl = "";
@@ -288,6 +294,10 @@ namespace Kato
 					await Task.WhenAll(m_servers.Select(x => x.VerifyConnectionAsync())).ConfigureAwait(true);
 					HasInternetConnection = m_servers.Any(x => x.IsConnected);
 				}
+				else
+				{
+					HasInternetConnection = true;
+				}
 			}
 			catch (Exception e)
 			{
@@ -308,7 +318,7 @@ namespace Kato
 			if (m_servers == null)
 				return;
 
-			var jobs = m_servers.Where(s => s.Jobs != null).SelectMany(s => s.Jobs);
+			var jobs = m_servers.Where(s => s.Jobs != null).SelectMany(s => s.Jobs).Where(j => !j.IsHidden);
 			foreach (var j in jobs)
 			{
 				switch (mode)
@@ -382,6 +392,7 @@ namespace Kato
 			foreach (var job in subscribedJobs.Except(SubscribedJobs))
 				SubscribedJobs.Add(job);
 
+			SubscribedJobs = new ObservableCollection<JobViewModel>(SubscribedJobs.OrderBy(j => j.Status).ThenBy(j => j.Name));
 
 			await Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action(SetTaskBarStatus));
 
@@ -484,7 +495,7 @@ namespace Kato
 			await Task.WhenAll(serverUris.Select(x => AddServer(x, authRequired))).ConfigureAwait(true);
 		}
 
-		private async Task<bool> AddServer(string serverUri, bool authRequired = false)
+		private async Task<bool> AddServer(string serverUri, bool authRequired = false, bool autoSave = false)
 		{
 			if (m_servers.Any(x => x.DomainUrl == serverUri))
 				return false;
@@ -521,6 +532,11 @@ namespace Kato
 			}
 
 			m_servers.Add(serverViewModel);
+
+			if (autoSave)
+			{
+				SaveSettings();
+			}
 
 			return true;
 		}

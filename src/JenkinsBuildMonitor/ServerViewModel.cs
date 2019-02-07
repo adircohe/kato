@@ -31,7 +31,7 @@ namespace Kato
 
 		public ObservableCollection<JobViewModel> Jobs => m_jobs;
 		public string DomainUrl => m_client.BaseUri.OriginalString;
-		public bool RequiresAuthentication => m_server?.RequiresAuthentication ?? false;
+		public bool RequiresAuthentication => m_client.Credentials != null;
 		public string Description { get; private set; }
 
 		public bool Delete
@@ -106,6 +106,12 @@ namespace Kato
 		public void Remove()
 		{
 			IsValid = false;
+
+			foreach(var job in m_jobs)
+			{
+				job.IsSubscribed = false;
+			}
+
 			m_jobs.Clear();
 			Delete = true;
 		}
