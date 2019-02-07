@@ -17,7 +17,7 @@
     <BuildPackage>True</BuildPackage>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <TargetFrameworkProfile />
-    <PublishUrl>e:\kato deploy\</PublishUrl>
+    <PublishUrl>\\ger\ec\proj\ha\RSG\Hardware_Releases\Tools\Kato\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\percdsk707\myshare\kato\</InstallUrl>
+    <InstallUrl>\\ger\ec\proj\ha\RSG\Hardware_Releases\Tools\Kato\</InstallUrl>
     <SupportUrl>https://github.com/DavidRogers/kato/issues</SupportUrl>
     <ErrorReportUrl>https://github.com/DavidRogers/kato/issues</ErrorReportUrl>
     <ProductName>Kato</ProductName>
@@ -35,7 +35,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.5.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
