@@ -116,7 +116,7 @@ namespace Kato.Resources
 				color = Brushes.DarkGreen;
 				break;
 			case "blue_anime":
-				color = alterBuilding ? Brushes.DarkGreen : Brushes.YellowGreen;
+				color = alterBuilding ? Brushes.DarkGreen : Brushes.GreenYellow;
 				break;
 			case "red":
 				color = Brushes.DarkRed;
@@ -125,7 +125,7 @@ namespace Kato.Resources
 				color = alterBuilding ? Brushes.DarkRed : Brushes.Orange;
 				break;
 			case "yellow_anime":
-				color = Brushes.YellowGreen;
+				color = Brushes.GreenYellow;
 				break;
 			case "disabled":
 			case "aborted":
@@ -155,7 +155,7 @@ namespace Kato.Resources
 				color = Colors.DarkGreen;
 				break;
 			case "blue_anime":
-				color = Colors.ForestGreen;
+				color = Colors.YellowGreen;
 				break;
 			case "red":
 				color = Colors.DarkRed;
