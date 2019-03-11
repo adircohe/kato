@@ -144,7 +144,7 @@ namespace Kato
 				job.Color = source.Color;
 				job.InQueue = source.InQueue;
 				job.HealthReports = source.HealthReport;
-				job.Description = source.Description;
+				job.Description = !string.IsNullOrEmpty(source.Description) ? source.Description : source.DisplayName;
 
 				UpdateLastBuild(job, source.LastBuild);
 			}

@@ -24,7 +24,7 @@
 			</Border.ContextMenu>
 			<Grid x:Name="MainGrid">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="40" />
+					<ColumnDefinition Width="28" />
 					<ColumnDefinition Width="28" />
 					<ColumnDefinition Width="250" />
 					<ColumnDefinition Width="160" />
@@ -33,23 +33,14 @@
 					<ColumnDefinition Width="80" />
 				</Grid.ColumnDefinitions>
 
-				<!--<Ellipse Margin="0,0,5,5"
+				<Ellipse Margin="0,0,5,5"
 					Fill="{Binding Color, Converter={x:Static resources:Converters.StatusToColorConverter}}"
 					Width="20" Height="20"
 					ToolTip="{Binding Status, Converter={x:Static resources:Converters.StatusToHumanReadableConverter}}">
 					<Ellipse.Effect>
 						<DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity=".5" Direction="290" />
 					</Ellipse.Effect>
-				</Ellipse>-->
-
-				<ProgressBar Height="15" Value="{Binding LastBuild.BuildPercentage, Mode=OneWay}" Minimum="0" Maximum="100"
-				             ToolTip="{Binding Status, Converter={x:Static resources:Converters.StatusToHumanReadableConverter}}"
-				             Background="{Binding Color, Converter={x:Static resources:Converters.StatusToColorConverter}, ConverterParameter=true}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-				             Padding="10,4">
-					<ProgressBar.Foreground>
-						<SolidColorBrush Color="{Binding Color, Converter={x:Static resources:Converters.StatusToBuildingColorConverter}}" />
-					</ProgressBar.Foreground>
-				</ProgressBar>
+				</Ellipse>
 
 				<Image Grid.Column="1" Width="24">
 					<Image.ToolTip>
@@ -83,6 +74,17 @@
 						</Style>
 					</Image.Style>
 				</Image>
+
+				<ProgressBar Grid.Column="2" Height="20" Value="{Binding LastBuild.BuildPercentage, Mode=OneWay}" Minimum="0" Maximum="100"
+							 ToolTip="{Binding Status, Converter={x:Static resources:Converters.StatusToHumanReadableConverter}}"
+				             Opacity="0.3"
+							 Background="White"
+				             Padding="10,4">
+					<ProgressBar.Foreground>
+						<SolidColorBrush Color="{Binding Color, Converter={x:Static resources:Converters.StatusToBuildingColorConverter}}" />
+					</ProgressBar.Foreground>
+				</ProgressBar>
+
 				<TextBlock Grid.Column="2" VerticalAlignment="Top" Margin="3,3,0,0"
 					Text="{Binding Name, Mode=OneTime}"
 					FontSize="12"
@@ -127,7 +129,7 @@
 	<DataTemplate x:Key="MainListViewItemTemplate" DataType="{x:Type src:AppModel}">
 		<DockPanel>
 			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
-				<TextBlock FontWeight="Bold" Margin="73,0,0,0" Width="246">Name</TextBlock>
+				<TextBlock FontWeight="Bold" Margin="64,0,0,0" Width="246">Name</TextBlock>
 				<TextBlock FontWeight="Bold" Width="160">Last Build</TextBlock>
 				<TextBlock FontWeight="Bold" Width="100">Duration</TextBlock>
 				<TextBlock FontWeight="Bold" Width="100">Est. Duration</TextBlock>

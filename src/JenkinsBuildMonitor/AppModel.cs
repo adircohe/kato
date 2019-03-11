@@ -159,6 +159,7 @@ namespace Kato
 				NotifyOfPropertyChange(() => UpdateTimerInterval);
 
 				UpdateTimer(TimeSpan.FromSeconds(m_updateTimerInterval));
+				SaveSettings();
 			}
 		}
 
